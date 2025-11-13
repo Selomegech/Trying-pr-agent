@@ -7,7 +7,7 @@ class DataHandlerAndProcessor: # CODE SMELL: Large Class
     """
 
     def __init__(self, source_url, max_records=5000):
-        # CODE SMELL: Magic Number in default argument
+        
         self.data_source = source_url
         self.data_cache = {}
         self.MAX_RECORDS = max_records
@@ -25,7 +25,7 @@ class DataHandlerAndProcessor: # CODE SMELL: Large Class
         if query_id in self.data_cache:
             raw_data = self.data_cache[query_id]
         else:
-            # CODE SMELL: Magic String/Hardcoded Value for data path
+         
             raw_data = self._simulate_fetch_from_db(f"{self.data_source}/data/{query_id}")
             self.data_cache[query_id] = raw_data
 
@@ -36,9 +36,9 @@ class DataHandlerAndProcessor: # CODE SMELL: Large Class
         self.status = "cleaning"
         clean_data = []
         for row in raw_data:
-            # CODE SMELL: Deep Nesting (Indentation Hell)
+            
             if row and len(row) > 2:
-                # CODE SMELL: Primitive Obsession (using list indexes instead of a named structure)
+                
                 if row[1] != 'INVALID':
                     if level == 'L1' and row[2] > 100: # CODE SMELL: Magic Number (100)
                         clean_data.append(row)
@@ -51,7 +51,7 @@ class DataHandlerAndProcessor: # CODE SMELL: Large Class
         result_map = {}
 
         for item in clean_data:
-            # CODE SMELL: Duplicate Code (same check logic as in cleaning)
+            
             if item[1] != 'INVALID': 
                 total_value += item[2]
                 key = item[0].upper()
@@ -63,7 +63,7 @@ class DataHandlerAndProcessor: # CODE SMELL: Large Class
         # Final Report Generation Logic
         self.status = "reporting"
         
-        # CODE SMELL: Unused Parameter (is_admin_request isn't used)
+      
         
         report = {
             "query_id": query_id,
@@ -100,4 +100,3 @@ if __name__ == '__main__':
     print("\n--- L2 Report ---")
     print(report_L2)
 
-    
